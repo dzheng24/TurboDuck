@@ -17,7 +17,7 @@ public class RaceTest {
     public void setUp() {
         allDucks = new HashMap<>();
         singleDuck = new HashMap<>();
-        singleDuck.put(0, new Duck());
+        singleDuck.put(0, DuckFarm.getDuck());
 
         for (int i = 0; i < 5; i++) {
             allDucks.put(i, new Duck("Duck " + i, Color.YELLOW));
@@ -43,10 +43,11 @@ public class RaceTest {
         Race.startRace(singleDuck, 0.25, false);
     }
 
-//    @Ignore("Dont know how to test this yet. ")
     @Test
     public void testWinningDuck() {
         Race.startRace(allDucks, 0.1, false);
+        allDucks.values().forEach((duck) -> System.out.println("Duck \"" + duck.getName() + "\" finished at "
+                + duck.getDistanceTraveled()));
 
     }
 

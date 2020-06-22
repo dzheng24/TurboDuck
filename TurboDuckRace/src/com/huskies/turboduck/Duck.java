@@ -27,7 +27,7 @@ public class Duck {
         DecimalFormat df = new DecimalFormat("#.##");
         randomIncrement = Double.valueOf(df.format(randomIncrement));
         this.distancePoint.changeRacerPosition(randomIncrement);
-        System.out.println("Duck has moved " + randomIncrement + " spots, and is now at " + this.getDistanceTraveled());
+//        System.out.println("Duck has moved " + randomIncrement + " spots, and is now at " + this.getDistanceTraveled());
 
     }
 
