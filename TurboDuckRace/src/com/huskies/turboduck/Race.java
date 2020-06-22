@@ -64,7 +64,7 @@ public class Race {
         while (!interrupted()) {
             try {
                 racer.move();
-                System.out.println("The duck moved!");
+                System.out.println("Duck \"" + racer.getName() + "\" is at position: " + racer.getPoint().getxPosition()); // remove for debugging later.
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 System.out.println("Thread finished. Delete later (only for debugging)");
@@ -89,6 +89,7 @@ public class Race {
                 .getKey();
 
         Duck winning = racers.get(winningID);
+        System.out.println("This duck won: " + winningID);
 
         return null;
     }
