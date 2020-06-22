@@ -1,35 +1,31 @@
 package com.huskies.turboduck;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static java.lang.Thread.interrupted;
 
 public class Race {
-    LocalDateTime endTime;  // the ending time for the race
-    int duration;           // duration of the race (in minutes)
-    boolean logResults;     // if winningBoard is going to log results
 
-    public Race(int duration) {
-        this.duration = duration;
-    }
-
-    public Race(int duration, boolean logResults) {
-        this(duration);
-        this.logResults = logResults;
+    private Race() {
+        // empty for static class
     }
 
     /**
-     * Starts the race. e.g. each racer in racers gets their own thread.
+     * Runs race. e.g. each racer in racers gets their own thread.
      */
-    public void startRace(Map<Integer, Duck> racers) {
-        // TODO
-        // iterate through each racer,
-        // start its own thread
-        // update willy nilly <- need ot discuss where the runnable implmentation should be (in duck?)
+    public static WinningBoard startRace(Map<Integer, Duck> racers, double duration, boolean logResults) {
 
-        endTime = LocalDateTime.now().plusMinutes(duration);
-        System.out.println("Race is ending at " + endTime);
+        int hours = (int) duration / 60;
+        int minutes =  (int) duration % 60;
+        int seconds = getSeconds(duration);
+        LocalDateTime endTime = LocalDateTime.now()
+                .plusHours(hours)
+                .plusMinutes(minutes)
+                .plusSeconds(seconds);
+        System.out.println("Race is ending at " + endTime.format(DateTimeFormatter.ISO_LOCAL_TIME)); //////////////////// delete this later?
 
         // need to keep track of each thread to interrupt later.
         Map<Integer, Thread> threads = new HashMap<>();
@@ -44,7 +40,19 @@ public class Race {
             // TODO track the position of each duck
         }
 
-        finishRace(threads, racers);
+        return finishRace(threads, racers);
+    }
+
+    /**
+     * Finds the seconds of a a double representing time in minutes. Rounds to whole seconds.
+     * @param val minutes
+     * @return
+     */
+    static int getSeconds(double val) {
+        BigDecimal temp = new BigDecimal(String.valueOf(val));
+        return temp.subtract(new BigDecimal(temp.intValue())) // get the decimal part
+                .multiply(new BigDecimal(60)) // get percentage of 60
+                .intValue();
     }
 
     /**
@@ -52,10 +60,11 @@ public class Race {
      * @param racer
      * @return
      */
-    private void runDuckThread(Duck racer) {
+    private static void runDuckThread(Duck racer) {
         while (!interrupted()) {
             try {
                 racer.move();
+                System.out.println("The duck moved!");
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 System.out.println("Thread finished. Delete later (only for debugging)");
@@ -68,7 +77,7 @@ public class Race {
      * This finishes the race and announces the winner, recording if
      * @return
      */
-    public WinningBoard finishRace(Map<Integer, Thread> threads, Map<Integer, Duck> racers) {
+    private static  WinningBoard finishRace(Map<Integer, Thread> threads, Map<Integer, Duck> racers) {
         for (Integer item : threads.keySet()) { // stop each duck
             threads.get(item).interrupt();
         }

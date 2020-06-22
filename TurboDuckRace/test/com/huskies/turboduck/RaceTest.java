@@ -17,12 +17,11 @@ public class RaceTest {
         allDucks.put(0, new Duck());
     }
 
-    @Test
+    @Test(timeout = 180000) // 3 minutes check
     public void testCheckDuration() {
-        Race race1 = new Race();
-        Race race2 = new Race(15);
+       Race.startRace(allDucks, 1, false);
+       Race.startRace(allDucks, 10, false);
 
-        race1.startRace(allDucks);
     }
 
     @Test
@@ -32,6 +31,21 @@ public class RaceTest {
 
     @Test
     public void testStartRace_1Duck() {
+        Map<Integer, Duck> singleDuck = new HashMap<>();
+        singleDuck.put(1, new Duck());
+        Race.startRace(singleDuck, 1, false);
+    }
 
+    @Test
+    public void testWinningDuck() {
+        Race.startRace(allDucks, 1, false);
+    }
+
+
+    @Test
+    public void testGetSeconds() {
+        assertEquals(15, Race.getSeconds(15.25));
+        assertEquals(30, Race.getSeconds(12.5));
+        assertEquals(54, Race.getSeconds(11.9));
     }
 }
