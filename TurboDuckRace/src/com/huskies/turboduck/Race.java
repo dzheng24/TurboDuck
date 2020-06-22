@@ -5,10 +5,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 import static java.lang.Thread.interrupted;
 
@@ -51,6 +48,7 @@ public class Race {
             // TODO track the position of each duck for visual output
         }
 
+        System.out.println("Race finished, stopping ducks...");
         return finishRace(threads, racers);
     }
 
@@ -75,11 +73,11 @@ public class Race {
         while (!interrupted()) {
             try {
                 racer.move();
-                System.out.println("Duck \"" + racer.getName() + "\" is at position: " + racer.getPoint().getxPosition()); // remove for debugging later.
+//                System.out.println("Duck \"" + racer.getName() + "\" is at position: " + racer.getDistanceTraveled()); // remove for debugging later.
                 Thread.sleep(500);
             } catch (InterruptedException e) {
-                System.out.println("Race finished, stopping ducks...");
-                System.out.println("Duck \"" + racer.getName() + "\" has stopped.");
+//                System.out.println("Race finished, stopping ducks...");
+//                System.out.println("Duck \"" + racer.getName() + "\" has stopped.");
                 break;
             }
         }
@@ -94,7 +92,7 @@ public class Race {
 
         // Figure out who won.
         Integer winningID = racers.entrySet().stream()
-                .max((entry1, entry2) -> (int) (entry1.getValue().getPoint().getxPosition() - entry2.getValue().getPoint().getxPosition()))
+                .max(Comparator.comparingDouble((entry) -> entry.getValue().getDistanceTraveled()))
                 .orElseGet(null)
                 .getKey();
 
