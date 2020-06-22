@@ -1,4 +1,4 @@
-package com.huskies.turboduck;
+package src.com.huskies.turboduck;
 
 public class Duck {
 

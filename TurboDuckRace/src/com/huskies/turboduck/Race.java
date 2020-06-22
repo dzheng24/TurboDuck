@@ -1,4 +1,4 @@
-package com.huskies.turboduck;
+package src.com.huskies.turboduck;
 
 import java.time.LocalDateTime;
 import java.util.Map;

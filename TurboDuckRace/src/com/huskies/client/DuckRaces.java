@@ -1,4 +1,4 @@
-package com.huskies.client;
+package src.com.huskies.client;
 
 public class DuckRaces {
 

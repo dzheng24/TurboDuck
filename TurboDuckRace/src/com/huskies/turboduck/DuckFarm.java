@@ -1,6 +1,5 @@
-package com.huskies.turboduck;
+package src.com.huskies.turboduck;
 
-import java.util.Collection;
 import java.util.Map;
 
 public class DuckFarm {
