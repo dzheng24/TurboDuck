@@ -1,6 +1,7 @@
 package com.huskies.turboduck;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 public class DuckFarm {
@@ -15,8 +16,14 @@ public class DuckFarm {
      * @return
      */
     public static Map<Integer, Duck> getDucks(int num) {
-        // TODO
-        return null;
+        // DONE
+        Map<Integer, Duck> ducksForRace = new HashMap<>();
+        for (int i = 1; i <= num; i++) {
+            Duck singleDuck = new Duck();
+            ducksForRace.put(i, singleDuck);
+        }
+        System.out.println(ducksForRace);
+        return ducksForRace;
     }
 
     /**
@@ -24,8 +31,9 @@ public class DuckFarm {
      * @return Duck
      */
     public static Duck getDuck() {
-        // TODO
-        return null;
+        // DONE
+        Duck defaultDuck = new Duck();
+        return defaultDuck;
     }
 
     /**
@@ -35,6 +43,9 @@ public class DuckFarm {
      * @return Duck
      */
     public static Duck getDuck(String name, Color color) {
-        return null;
+        Duck customDuck = new Duck();
+        customDuck.setName(name);
+        customDuck.setColor(color);
+        return customDuck;
     }
 }

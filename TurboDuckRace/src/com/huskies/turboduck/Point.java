@@ -2,7 +2,7 @@ package com.huskies.turboduck;
 
 public class Point {
 
-    double xPosition;   // Location along x dimension of this point
+    private double xPosition = 0.0;   // Location along x dimension of this point
 
     public Point() {
         xPosition = 0.0;
@@ -11,8 +11,9 @@ public class Point {
     /**
      * Apply some transformation to this point.
      */
-    public void move() {
+    public void changeRacerPosition(double increment) {
         // TODO
+        this.xPosition = this.xPosition + increment;
     }
 
     /**
