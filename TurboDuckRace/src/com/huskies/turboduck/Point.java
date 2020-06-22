@@ -12,7 +12,7 @@ public class Point {
      * Apply some transformation to this point.
      */
     public void changeRacerPosition(double increment) {
-        // TODO
+        // DONE
         this.xPosition = this.xPosition + increment;
     }
 

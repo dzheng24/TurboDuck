@@ -20,6 +20,21 @@ public class DuckTest {
 
         assertEquals("David", testDuck.getName());
         assertEquals(Color.BLUE, testDuck.getColor());
-        assertEquals(0.0, testDuck.getPoint(), .001);
+        assertEquals(0.0, testDuck.getDistanceTraveled(), .001);
+    }
+
+    @Test
+    public void testingDistanceTraveled() {
+        Duck testDuck = new Duck("Jay", Color.GREEN);
+
+        assertEquals(0.0, testDuck.getDistanceTraveled(), .001);
+        testDuck.move();
+        // tell the duck to move again
+        testDuck.move();
+        // and again...
+        testDuck.move();
+        System.out.println();
+        System.out.println(testDuck.getDistanceTraveled());
+
     }
 }

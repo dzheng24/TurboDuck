@@ -1,5 +1,7 @@
 package com.huskies.turboduck;
 
+import java.text.DecimalFormat;
+
 public class Duck {
 
     // FIELDS
@@ -20,9 +22,13 @@ public class Duck {
 
     // BUSINESS METHODS
     public void move() {
-        // TODO
+        // DONE
         double randomIncrement = Math.random();
+        DecimalFormat df = new DecimalFormat("#.##");
+        randomIncrement = Double.valueOf(df.format(randomIncrement));
         this.distancePoint.changeRacerPosition(randomIncrement);
+        System.out.println("Duck has moved " + randomIncrement + " spots, and is now at " + this.getDistanceTraveled());
+
     }
 
     // GETTERS/SETTERS
@@ -42,7 +48,7 @@ public class Duck {
         return color;
     }
 
-    public double getPoint() {
+    public double getDistanceTraveled() {
         return distancePoint.getxPosition();
     }
 }
