@@ -93,7 +93,7 @@ public class Race {
         // Figure out who won.
         Integer winningID = racers.entrySet().stream()
                 .max(Comparator.comparingDouble((entry) -> entry.getValue().getDistanceTraveled()))
-                .orElseGet(null)
+                .orElse(null)
                 .getKey();
 
         Duck winning = racers.get(winningID);
