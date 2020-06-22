@@ -1,9 +1,14 @@
 package com.huskies.turboduck;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.time.temporal.ChronoUnit;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 import static java.lang.Thread.interrupted;
 
@@ -17,6 +22,9 @@ public class Race {
      * Runs race. e.g. each racer in racers gets their own thread.
      */
     public static WinningBoard startRace(Map<Integer, Duck> racers, double duration, boolean logResults) {
+        if (racers == null || duration < 0) {
+            throw new IllegalArgumentException();
+        }
 
         int hours = (int) duration / 60;
         int minutes =  (int) duration % 60;
@@ -28,16 +36,19 @@ public class Race {
         System.out.println("Race is ending at " + endTime.format(DateTimeFormatter.ISO_LOCAL_TIME)); //////////////////// delete this later?
 
         // need to keep track of each thread to interrupt later.
-        Map<Integer, Thread> threads = new HashMap<>();
+        Collection<Thread> threads = new LinkedList<>();
+        racers.values().forEach((entry) -> {
+            Thread thread = new Thread(() -> runDuckThread(entry));
+            thread.start();
+            threads.add(thread);
+        });
 
-        for (Integer entry : racers.keySet()) {
-            threads.put(entry, new Thread(() -> runDuckThread(racers.get(entry))));
-            threads.get(entry).start();
-        }
-
-        while (LocalDateTime.now().isBefore(endTime)) {
-            // wait until race is done, do nothing for now
-            // TODO track the position of each duck
+        // wait until race is done
+        LocalDateTime curr;
+        while ((curr = LocalDateTime.now()).isBefore(endTime)) {
+            Duration dur = Duration.between(curr, endTime);
+//            System.out.printf("Time until race done %d:%d:%d\n", dur.toHoursPart(), dur.toMinutesPart(), dur.toSecondsPart());
+            // TODO track the position of each duck for visual output
         }
 
         return finishRace(threads, racers);
@@ -67,7 +78,8 @@ public class Race {
                 System.out.println("Duck \"" + racer.getName() + "\" is at position: " + racer.getPoint().getxPosition()); // remove for debugging later.
                 Thread.sleep(500);
             } catch (InterruptedException e) {
-                System.out.println("Thread finished. Delete later (only for debugging)");
+                System.out.println("Race finished, stopping ducks...");
+                System.out.println("Duck \"" + racer.getName() + "\" has stopped.");
                 break;
             }
         }
@@ -77,10 +89,8 @@ public class Race {
      * This finishes the race and announces the winner, recording if
      * @return
      */
-    private static  WinningBoard finishRace(Map<Integer, Thread> threads, Map<Integer, Duck> racers) {
-        for (Integer item : threads.keySet()) { // stop each duck
-            threads.get(item).interrupt();
-        }
+    private static  WinningBoard finishRace(Collection<Thread> threads, Map<Integer, Duck> racers) {
+        threads.forEach(Thread::interrupt);
 
         // Figure out who won.
         Integer winningID = racers.entrySet().stream()

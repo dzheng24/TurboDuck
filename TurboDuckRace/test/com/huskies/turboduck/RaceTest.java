@@ -24,10 +24,11 @@ public class RaceTest {
         }
     }
 
-    @Ignore @Test
+    @Ignore("Test is long, comment out if checking. ")
+    @Test
     public void testCheckDuration() {
        Race.startRace(singleDuck, 1, false);
-       Race.startRace(singleDuck, 10, false);
+       Race.startRace(singleDuck, 3.2, false);
 
     }
 
@@ -42,11 +43,31 @@ public class RaceTest {
         Race.startRace(singleDuck, 0.25, false);
     }
 
-    @Ignore("Dont know how to test this yet. ")
+//    @Ignore("Dont know how to test this yet. ")
     @Test
     public void testWinningDuck() {
         Race.startRace(allDucks, 0.1, false);
 
+    }
+
+    @Test
+    public void testEmptyRace() {
+        try {
+            Race.startRace(null, 0.1, false);
+            fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            // it worked.
+        }
+    }
+
+    @Test
+    public void testNegativeDuration() {
+        try {
+            Race.startRace(allDucks, -10, false);
+            fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException e ){
+            // it worked
+        }
     }
 
     @Test
