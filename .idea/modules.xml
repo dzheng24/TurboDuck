@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/TurboDuck.iml" filepath="$PROJECT_DIR$/.idea/TurboDuck.iml" />
-      <module fileurl="file://$PROJECT_DIR$/TurboDuckRace/TurboDuckRace.iml" filepath="$PROJECT_DIR$/TurboDuckRace/TurboDuckRace.iml" />
-    </modules>
-  </component>
-</project>
