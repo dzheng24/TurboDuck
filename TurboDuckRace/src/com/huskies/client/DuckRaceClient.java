@@ -49,8 +49,6 @@ public class DuckRaceClient {
         startRace(DucksForRace, durationForRace, true);
 
 
-        StringBuffer duckProgressVisual = new StringBuffer();
-
         List<Duck> duckList = DucksForRace.values().stream()
                 .sorted(Comparator.comparingDouble((Duck duck) -> duck.getDistanceTraveled()).reversed())
                 .limit(3)
