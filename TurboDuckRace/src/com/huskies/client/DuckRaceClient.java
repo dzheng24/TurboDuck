@@ -3,8 +3,12 @@ package com.huskies.client;
 import com.huskies.turboduck.Duck;
 import com.huskies.turboduck.DuckFarm;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+
 import static com.huskies.turboduck.Race.startRace;
 
 public class DuckRaceClient {
@@ -38,12 +42,22 @@ public class DuckRaceClient {
 
 
 
-        // TODO passing the information to startRace()
+        // DONE passing the information to startRace()
         Map<Integer, Duck> DucksForRace = DuckFarm.getDucks(numOfRacers);
         double durationForRace = raceDuration;
         boolean isLog = true;
         startRace(DucksForRace, durationForRace, true);
-        DucksForRace.values().forEach((duck) -> System.out.println("Duck \"" + duck.getName() + "\" finished at "
+
+
+        StringBuffer duckProgressVisual = new StringBuffer();
+
+        List<Duck> duckList = DucksForRace.values().stream()
+                .sorted(Comparator.comparingDouble((Duck duck) -> duck.getDistanceTraveled()).reversed())
+                .limit(3)
+                .collect(Collectors.toList());
+
+                duckList.forEach((duck) -> System.out.println("Duck \"" + duck.getName() + "\" finished at "
                 + duck.getDistanceTraveled()));
+
     }
 }

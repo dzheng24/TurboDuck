@@ -73,7 +73,7 @@ public class Race {
         while (!interrupted()) {
             try {
                 racer.move();
-                System.out.println("Duck \"" + racer.getName() + "\" is at position: " + racer.getDistanceTraveled()); // remove for debugging later.
+//                System.out.println("Duck \"" + racer.getName() + "\" is at position: " + racer.getDistanceTraveled()); // remove for debugging later.
                 Thread.sleep(500);
             } catch (InterruptedException e) {
 //                System.out.println("Race finished, stopping ducks...");
