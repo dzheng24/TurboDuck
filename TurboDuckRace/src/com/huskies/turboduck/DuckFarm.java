@@ -1,6 +1,7 @@
 package com.huskies.turboduck;
 
-import java.util.Collection;
+import com.huskies.ui.UIConstants;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ public class DuckFarm {
         Map<Integer, Duck> ducksForRace = new HashMap<>();
         for (int i = 1; i <= num; i++) {
             Duck singleDuck = new Duck();
+            singleDuck.setLineUpPosition(i* UIConstants.IMAGE_SCALING/2);
             ducksForRace.put(i, singleDuck);
         }
         System.out.println(ducksForRace);
