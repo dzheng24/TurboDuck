@@ -1,5 +1,9 @@
 package com.huskies.client;
 
+import com.huskies.turboduck.WinningBoard;
+
+import java.util.Scanner;
+
 public class DuckRaces {
 
     public static void main(String[] args) {
@@ -8,5 +12,6 @@ public class DuckRaces {
         // TODO make a race
 
         // TODO Race the ducks
+
     }
 }
