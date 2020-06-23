@@ -1,0 +1,47 @@
+package com.huskies.client;
+
+import com.huskies.turboduck.Duck;
+import com.huskies.turboduck.DuckFarm;
+
+import java.util.Map;
+import java.util.Scanner;
+import static com.huskies.turboduck.Race.startRace;
+
+public class DuckRaceClient {
+
+    public static void main(String[] args) {
+        System.out.println("WELCOME TO TURBO DUCK RACE");
+        // TODO startRace() needs racers
+        System.out.println("How many racers are in this race? Enter below");
+        Scanner numOfRacersScanner = new Scanner(System.in);
+        int numOfRacers = numOfRacersScanner.nextInt();
+        System.out.println(numOfRacers + " racers");
+
+        //  TODO startRace() needs double duration
+        System.out.println("How long is the race in minutes? Enter below");
+        Scanner raceDurationScanner = new Scanner(System.in);
+        double raceDuration = raceDurationScanner.nextDouble();
+        System.out.println(raceDuration + " minutes");
+
+        //  TODO boolean logResults
+        /*
+        System.out.println("Would you like the results to be logged? Enter 'true' or 'false'");
+        Scanner logResultsInput = new Scanner(System.in);
+        boolean isLog = logResultsInput.nextBoolean();
+        System.out.println(logResultsInput.nextBoolean());
+        if (isLog == true) {
+            System.out.println("Your results will be logged!");
+        } else {
+            System.out.println("Your results will not be logged.");
+        }
+        */
+
+
+
+        // TODO passing the information to startRace()
+        Map<Integer, Duck> numOfDucksForRace = DuckFarm.getDucks(numOfRacers);
+        double durationForRace = raceDuration;
+        boolean isLog = true;
+        startRace(numOfDucksForRace, durationForRace, true);
+    }
+}
