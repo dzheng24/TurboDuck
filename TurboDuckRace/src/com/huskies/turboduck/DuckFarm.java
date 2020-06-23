@@ -20,6 +20,7 @@ public class DuckFarm {
         Map<Integer, Duck> ducksForRace = new HashMap<>();
         for (int i = 1; i <= num; i++) {
             Duck singleDuck = new Duck();
+            singleDuck.setName("Duck " + i);
             ducksForRace.put(i, singleDuck);
         }
         System.out.println(ducksForRace);

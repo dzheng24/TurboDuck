@@ -39,9 +39,11 @@ public class DuckRaceClient {
 
 
         // TODO passing the information to startRace()
-        Map<Integer, Duck> numOfDucksForRace = DuckFarm.getDucks(numOfRacers);
+        Map<Integer, Duck> DucksForRace = DuckFarm.getDucks(numOfRacers);
         double durationForRace = raceDuration;
         boolean isLog = true;
-        startRace(numOfDucksForRace, durationForRace, true);
+        startRace(DucksForRace, durationForRace, true);
+        DucksForRace.values().forEach((duck) -> System.out.println("Duck \"" + duck.getName() + "\" finished at "
+                + duck.getDistanceTraveled()));
     }
 }
