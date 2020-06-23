@@ -22,6 +22,7 @@ public class DuckFarm {
         for (int i = 1; i <= num; i++) {
             Duck singleDuck = new Duck();
             singleDuck.setLineUpPosition(i* UIConstants.IMAGE_SCALING/2);
+            singleDuck.setName("Duck " + i);
             ducksForRace.put(i, singleDuck);
         }
         System.out.println(ducksForRace);
