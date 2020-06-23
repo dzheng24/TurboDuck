@@ -40,12 +40,33 @@ public class Race {
             threads.add(thread);
         });
 
+
         // wait until race is done
         LocalDateTime curr;
         while ((curr = LocalDateTime.now()).isBefore(endTime)) {
             Duration dur = Duration.between(curr, endTime);
 //            System.out.printf("Time until race done %d:%d:%d\n", dur.toHoursPart(), dur.toMinutesPart(), dur.toSecondsPart());
             // TODO track the position of each duck for visual output
+
+            // adding the distance point
+            try {
+
+
+
+                racers.values().forEach((duck) -> {
+                    StringBuffer racerProgress = new StringBuffer();
+                    for (double i = 0; i < duck.getDistanceTraveled(); i = i + 0.1) {
+                        racerProgress.append("->");
+                    }
+                    System.out.println(duck.getName() + racerProgress);
+                });
+//                System.out.println("Duck \"" + racer.getName() + "\" is at position: " + racer.getDistanceTraveled()); // remove for debugging later.
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+//                System.out.println("Race finished, stopping ducks...");
+//                System.out.println("Duck \"" + racer.getName() + "\" has stopped.");
+                break;
+            }
         }
 
         System.out.println("Race finished, stopping ducks...");
