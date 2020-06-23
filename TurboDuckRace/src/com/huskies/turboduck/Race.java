@@ -101,5 +101,15 @@ public class Race {
 
         return null;
     }
+    
+    public static int getWinningID(Map<Integer, Duck> racers){
+        Integer winningID = racers.entrySet().stream()
+                .max(Comparator.comparingDouble((entry) -> entry.getValue().getDistanceTraveled()))
+                .orElse(null)
+                .getKey();
+
+        Duck winning = racers.get(winningID);
+        return winningID;
+    }
 
 }
