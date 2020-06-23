@@ -1,0 +1,5 @@
+Ricky
+Anna,PRIZE-2,CASH-1
+Bob,Prize-1,cash-0
+AStro,Cash-1
+Ken, prize-3
