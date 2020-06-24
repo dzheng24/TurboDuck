@@ -13,21 +13,52 @@ public class Race {
 
     // empty for static class
     private static Duration dur = Duration.ZERO;
+    private static Collection<Thread> racingThreads;
+    private static LocalDateTime endTime;
+    private static Thread racingWaitThread;
 
     private Race() {
     }
 
-//    public static void startRaceUI(Map<Integer, Duck> racers, double duration, boolean logResults) {
-//        Thread someThread = new Thread()
-//    }
+    public static Collection<Thread> startRaceUI(Map<Integer, Duck> racers, double duration, boolean logResults) {
+        if (racers == null || duration < 0) {
+            throw new IllegalArgumentException();
+        }
 
-//    private static void raceInthread(Map<Integer, Duck> racers, double duration, boolean logResults) {
-//        while (!interrupted()) {
-//            try {
-//
-//            }
-//        }
-//    }
+        int hours = (int) duration / 60;
+        int minutes =  (int) duration % 60;
+        int seconds = getSeconds(duration);
+        endTime = LocalDateTime.now()
+                .plusHours(hours)
+                .plusMinutes(minutes)
+                .plusSeconds(seconds);
+        System.out.println("Race is ending at " + endTime.format(DateTimeFormatter.ISO_LOCAL_TIME)); //////////////////// delete this later?
+
+        // need to keep track of each thread to interrupt later.
+        Collection<Thread> threads = new LinkedList<>();
+        racers.values().forEach((entry) -> {
+            Thread thread = new Thread(() -> runDuckThread(entry));
+            thread.start();
+            threads.add(thread);
+        });
+
+        racingWaitThread = new Thread(() -> raceInthread(endTime));
+        racingWaitThread.start();
+
+        return threads;
+    }
+
+    public static Thread getWaitingRaceThread() {
+        return racingWaitThread;
+    }
+
+    private static void raceInthread(LocalDateTime endTime) {
+        LocalDateTime curr;
+        while (!interrupted() && (curr = LocalDateTime.now()).isBefore(endTime)) {
+            dur = Duration.between(curr, endTime);
+        }
+    }
+
 
     /**
      * Runs race. e.g. each racer in racers gets their own thread.
@@ -64,9 +95,6 @@ public class Race {
 
             // adding the distance point
             try {
-
-
-
                 racers.values().forEach((duck) -> {
                     StringBuffer racerProgress = new StringBuffer();
                     for (double i = 0; i < duck.getDistanceTraveled(); i = i + 0.1) {
@@ -113,7 +141,7 @@ public class Race {
             try {
                 racer.move();
 //                System.out.println("Duck \"" + racer.getName() + "\" is at position: " + racer.getDistanceTraveled()); // remove for debugging later.
-                Thread.sleep(500);
+                Thread.sleep(250);
             } catch (InterruptedException e) {
 //                System.out.println("Race finished, stopping ducks...");
 //                System.out.println("Duck \"" + racer.getName() + "\" has stopped.");
@@ -126,18 +154,9 @@ public class Race {
      * This finishes the race and announces the winner, recording if
      * @return
      */
-    private static  WinningBoard finishRace(Collection<Thread> threads, Map<Integer, Duck> racers) {
+    public static  WinningBoard finishRace(Collection<Thread> threads, Map<Integer, Duck> racers) {
         threads.forEach(Thread::interrupt);
-
-        // Figure out who won.
-        Integer winningID = racers.entrySet().stream()
-                .max(Comparator.comparingDouble((entry) -> entry.getValue().getDistanceTraveled()))
-                .orElse(null)
-                .getKey();
-
-        Duck winning = racers.get(winningID);
-        System.out.println("This duck won: " + winningID);
-
+        dur = Duration.ZERO;
         return null;
     }
     

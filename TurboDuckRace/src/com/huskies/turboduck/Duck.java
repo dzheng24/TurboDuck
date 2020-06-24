@@ -57,6 +57,10 @@ public class Duck {
         return distancePoint.getxPosition();
     }
 
+    public void resetToStart() {
+        distancePoint.changeRacerPosition(getDistanceTraveled() * -1);
+    }
+
     public double getLineUpPosition() {
         return distancePoint.getYPosition();
     }

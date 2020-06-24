@@ -33,4 +33,5 @@ public class Point {
     public void setyPosition(double yPosition) {
         this.yPosition = yPosition;
     }
+
 }

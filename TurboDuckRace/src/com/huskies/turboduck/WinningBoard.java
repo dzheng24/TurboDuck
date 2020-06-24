@@ -1,6 +1,7 @@
 package com.huskies.turboduck;
 
 import java.io.*;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -64,7 +65,7 @@ public class WinningBoard {
      */
     public void recordResult() throws IOException {
 
-        String path = "C:\\MiniProject\\TurboDuck\\TurboDuckRace\\src\\wb.txt";
+        String path = ClassLoader.getSystemResource("winningBoard/wb.txt").getPath();
         File filename = new File(path);
         FileInputStream filestream = new FileInputStream(filename);
         InputStreamReader reader = new InputStreamReader(filestream);
