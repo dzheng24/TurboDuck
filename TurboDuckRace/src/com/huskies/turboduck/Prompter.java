@@ -17,10 +17,6 @@ public class Prompter {
         // empty for static class
     }
 
-    public static void startRace() {
-
-    }
-
 
     public static Map<Integer, Duck> runRace() {
 
