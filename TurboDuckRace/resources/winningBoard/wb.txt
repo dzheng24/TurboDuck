@@ -1,0 +1,4 @@
+AStro, CASH=1
+Anna, PRIZE=2, CASH=1
+Bob, PRIZE=1, CASH=0
+Ken, PRIZE=3
