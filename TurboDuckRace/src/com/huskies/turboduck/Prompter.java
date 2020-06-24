@@ -12,6 +12,8 @@ public class Prompter {
 
     private final Scanner scanner = new Scanner(System.in);    // To get input
     private List<RaceFans> fans;
+    private final String RACER_DEFAULT_PATH = "C:\\Users\\levid\\Documents\\Apprentice\\Mini-Project-Java\\TurboDuckRace\\resources\\data\\racers";
+    private final String WINNINGBOARD_DEFAULT_PATH = "C:\\Users\\levid\\Documents\\Apprentice\\Mini-Project-Java\\TurboDuckRace\\resources\\data\\wb.txt";
 
     public Prompter() {
         // empty for static class
@@ -27,7 +29,7 @@ public class Prompter {
         Map<Integer, Duck> racers;
 
         if (readFromFile) {
-            String filePath = getFilePath();
+            String filePath = getFilePath(RACER_DEFAULT_PATH);
             fans = RaceFanFactory.getRaceFans(filePath);
             racers = DuckFarm.getDucks(fans);
         } else {
@@ -83,7 +85,7 @@ public class Prompter {
 
         if (doThing("Do you want to save the results?")) { // save to a file
             WinningBoard wb = new WinningBoard(fans);
-            String filePath = getFilePath();
+            String filePath = getFilePath(WINNINGBOARD_DEFAULT_PATH);
             if (filePath != null) { // overwrite the file
                 wb.setPath(filePath);
             }
@@ -153,13 +155,19 @@ public class Prompter {
         System.out.println(banner + "\n");
     }
 
-    private String getFilePath() {
+    private String getFilePath(String defaultPath) {
         String returning = "";
         boolean gotInput = false;
-        System.out.print("File absolute path:  ");
+        System.out.print("Use default? (enter for yes)");
         while (!gotInput) {
             String filePath = scanner.nextLine();
-            if (Files.exists(Path.of(filePath))) {
+            // check if want to use default.
+            if (filePath.isEmpty() || "YES".equals(filePath.toUpperCase().strip())
+                    || "Y".equals(filePath.toUpperCase().strip())) {
+                filePath = defaultPath;
+            }
+
+            if (Files.exists(Path.of(filePath))) { // make sure file exists
                 gotInput = true;
                 returning = filePath;
             } else {

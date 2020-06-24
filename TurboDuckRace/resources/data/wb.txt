@@ -4,3 +4,4 @@ Bob, PRIZE=2
 Chris, PRIZE=1
 Jesse, PRIZE=1
 Ken, PRIZE=3
+Kris, CASH=1
