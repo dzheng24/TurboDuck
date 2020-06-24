@@ -3,6 +3,11 @@ package com.huskies.client;
 import com.huskies.turboduck.Duck;
 import com.huskies.turboduck.DuckFarm;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +19,9 @@ import static com.huskies.turboduck.Race.startRace;
 public class DuckRaceClient {
 
     public static void main(String[] args) {
+
+        printBanner();
+
         System.out.println("WELCOME TO TURBO DUCK RACE");
         // TODO startRace() needs racers
         System.out.println("How many racers are in this race? Enter below");
@@ -57,5 +65,20 @@ public class DuckRaceClient {
                 duckList.forEach((duck) -> System.out.println("Duck \"" + duck.getName() + "\" finished at "
                 + duck.getDistanceTraveled()));
 
+    }
+
+
+
+    private static void printBanner() {
+        URL asciiFile = (ClassLoader.getSystemResource(Path.of("ascii_art","banner.txt").toString()));
+        String banner = null;
+
+        try {
+            banner = "\n\n" + Files.lines(Path.of(asciiFile.toURI())).collect(Collectors.joining("\n"));
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(banner + "\n");
     }
 }
