@@ -2,6 +2,7 @@ package com.huskies.turboduck;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DuckFarm {
@@ -23,9 +24,19 @@ public class DuckFarm {
             singleDuck.setName("Duck " + i);
             ducksForRace.put(i, singleDuck);
         }
-        System.out.println(ducksForRace);
+//        System.out.println(ducksForRace);
         return ducksForRace;
     }
+
+    public static Map<Integer, Duck> getDucks(List<RaceFans> fansList) {
+        Map<Integer, Duck> returning = new HashMap<>();
+        for (RaceFans fan : fansList) {
+            returning.put(fan.raceFansNumber, getDuck(fan.raceFansName + "'s duck", Color.YELLOW));
+        }
+        return returning;
+    }
+
+
 
     /**
      * Constructs a Duck with default parameters and returns it.

@@ -1,6 +1,5 @@
 package com.huskies.turboduck;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -11,14 +10,15 @@ import java.util.stream.Collectors;
 
 public class Prompter {
 
-    private static Scanner scanner = new Scanner(System.in);    // To get input
+    private final Scanner scanner = new Scanner(System.in);    // To get input
+    private List<RaceFans> fans;
 
-    private Prompter() {
+    public Prompter() {
         // empty for static class
     }
 
 
-    public static Map<Integer, Duck> runRace() {
+    public Map<Integer, Duck> runRace() {
 
         // read from file or not?
         boolean readFromFile = doThing("Do you want to read racers from a file?");
@@ -27,10 +27,9 @@ public class Prompter {
         Map<Integer, Duck> racers;
 
         if (readFromFile) {
-            // method to read from file
-            String filePath = scanner.nextLine(); //TODO path input checking
-//            racers = readRacersFromfile(filePath)
-            racers = DuckFarm.getDucks(1);
+            String filePath = getFilePath();
+            fans = RaceFanFactory.getRaceFans(filePath);
+            racers = DuckFarm.getDucks(fans);
         } else {
             System.out.println("How many racers are in this race? Enter below");
             int numOfRacers = 0;
@@ -73,26 +72,35 @@ public class Prompter {
     }
 
 
-    public static void chooseAward(Map<Integer, Duck> racers) {
+    public void chooseAward(Map<Integer, Duck> racers) {
+        List<Duck> topThree = racers.values().stream()
+                .sorted(Comparator.comparingDouble((Duck duck) -> duck.getDistanceTraveled()).reversed())
+                .limit(3)
+                .collect(Collectors.toList());
+
         System.out.println();
-        boolean logResults = doThing("Do you want to save the results?");
+        System.out.println(topThree.get(0).getName() + " won!");
 
-        if (logResults) { // save to a file
-            // something in winningboard
+        if (doThing("Do you want to save the results?")) { // save to a file
+            WinningBoard wb = new WinningBoard(fans);
+            String filePath = getFilePath();
+            if (filePath != null) { // overwrite the file
+                wb.setPath(filePath);
+            }
+            wb.readBoard();
+            int awardChoice = getAwardChoice();
+            wb.awardPrize(racers, awardChoice);
+            wb.updateBoard();
+
         } else {
-            // print out the winner
-            List<Duck> duckList = racers.values().stream()
-                    .sorted(Comparator.comparingDouble((Duck duck) -> duck.getDistanceTraveled()).reversed())
-                    .limit(3)
-                    .collect(Collectors.toList());
-
-            duckList.forEach((duck) -> System.out.println("Duck \"" + duck.getName() + "\" finished at "
+            // print out the top 3 finishers
+            topThree.forEach((duck) -> System.out.println(duck.getName() + " finished at "
                     + duck.getDistanceTraveled() + " (Light Years)"));
         }
 
     }
 
-    private static boolean doThing(String message) {
+    private boolean doThing(String message) {
         System.out.println(message);
         boolean gotInput = false;
         boolean returning = false;
@@ -113,7 +121,26 @@ public class Prompter {
         return returning;
     }
 
-    public static void printBanner() {
+    private int getAwardChoice() {
+        System.out.print("What award do you desire?");
+        System.out.println("Cash = 1; Prize = 2");
+        int awardChoice = 0;
+        while (awardChoice == 0) {
+            try {
+                awardChoice = scanner.nextInt();
+                if (awardChoice != 1 && awardChoice != 2) {
+                    awardChoice = 0;
+                    throw new IllegalArgumentException();
+                }
+            } catch (InputMismatchException | IllegalArgumentException e) {
+                scanner.nextLine();
+                System.out.println("Input has to be either 1 or 2!");
+            }
+        }
+        return awardChoice;
+    }
+
+    public void printBanner() {
         URL asciiFile = (ClassLoader.getSystemResource(Path.of("ascii_art","banner.txt").toString()));
         String banner = null;
 
@@ -124,5 +151,21 @@ public class Prompter {
         }
 
         System.out.println(banner + "\n");
+    }
+
+    private String getFilePath() {
+        String returning = "";
+        boolean gotInput = false;
+        System.out.print("File absolute path:  ");
+        while (!gotInput) {
+            String filePath = scanner.nextLine();
+            if (Files.exists(Path.of(filePath))) {
+                gotInput = true;
+                returning = filePath;
+            } else {
+                System.out.println("Error: Cannot find file! Try again...");
+            }
+        }
+        return returning;
     }
 }
