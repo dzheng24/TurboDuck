@@ -5,12 +5,11 @@ import com.huskies.turboduck.Prompter;
 public class DuckRaceClient {
 
     public static void main(String[] args) {
+        Prompter prompter = new Prompter();
 
-        Prompter.printBanner();
-
-        var racers = Prompter.runRace();
-
-        Prompter.chooseAward(racers);
+        prompter.printBanner();
+        var racers = prompter.runRace();
+        prompter.chooseAward(racers);
 
     }
 
