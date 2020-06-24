@@ -1,6 +1,6 @@
 package com.huskies.turboduck;
 
-public class raceFans {
+public class RaceFans {
 
     String raceFansName;     // the name of the winning racer
     int raceFansNumber;      // the number id of the winner
@@ -13,7 +13,7 @@ public class raceFans {
     }
     public void setRaceFansNumber(int raceFansNumber) {this.raceFansNumber = raceFansNumber;}
 
-    public raceFans(int raceFansNumber, String raceFansName) {
+    public RaceFans(int raceFansNumber, String raceFansName) {
         setRaceFansNumber(raceFansNumber);
         setRaceFansName(raceFansName);
     }
