@@ -1,10 +1,8 @@
 package com.huskies.turboduck;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -12,7 +10,7 @@ import static org.junit.Assert.*;
 public class WinningBoardTest{
 
         WinningBoard wb = new WinningBoard();
-        List<raceFans> allFans = wb.getFans4TheWin();
+        List<RaceFans> allFans = wb.getFans4TheWin();
 
 
     @Test
@@ -25,9 +23,20 @@ public class WinningBoardTest{
         assertNull(wb.findWinnerByID(100));
     }
 
+    @Test
+    public void testAwardPrize_shouldReturnEnumWhenClientChooseOne() {
+    }
 
     @Test
     public void testRecordResultIfRetriveTXT() throws IOException {
-        wb.recordResult();
+    }
+
+    @Test
+    public void testUpdateBoard() throws IOException {
+        WinningBoard wbt = new WinningBoard();
+        wbt.readBoard();
+        wbt.updateBoard();
+
+
     }
 }

@@ -77,4 +77,5 @@ public class RaceTest {
         assertEquals(30, Race.getSeconds(12.5));
         assertEquals(54, Race.getSeconds(11.9));
     }
+
 }
