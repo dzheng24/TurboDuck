@@ -1,6 +1,11 @@
 package com.huskies.turboduck;
 
 import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 import static java.lang.Integer.parseInt;
@@ -105,12 +110,11 @@ public class WinningBoard {
         int winningID = Race.getWinningID(racers);
         String winnerName = findWinnerByID(winningID);  //winningID
         if (prizeNum == 1) {
-            System.out.println(Award.CASH.toString() + " to " + winnerName);
             setAward(Award.CASH);
         } else {
-                System.out.println(Award.PRIZE.toString() + " to " + winnerName);
                 setAward(Award.PRIZE);
         }
+        System.out.println(winnerName + " gets " + award.toString() + "!");
 
         //update winnersOnboard
         Map<Award, Integer> prizeCount;
@@ -160,6 +164,18 @@ public class WinningBoard {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void printWinningBoard() {
+        String board = null;
+
+        try {
+            board = Files.lines(Paths.get(path)).collect(Collectors.joining("\n"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("\n\nWinner's Circle:");
+        System.out.println(board);
     }
 }
 

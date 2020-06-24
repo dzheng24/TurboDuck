@@ -1,5 +1,7 @@
 package com.huskies.turboduck;
 
+import com.sun.security.jgss.GSSUtil;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -83,6 +85,10 @@ public class Prompter {
         System.out.println();
         System.out.println(topThree.get(0).getName() + " won!");
 
+        topThree.forEach((duck) -> System.out.println(duck.getName() + " finished at "
+                + duck.getDistanceTraveled() + " Light Years away."));
+        System.out.println();
+
         if (doThing("Do you want to save the results?")) { // save to a file
             WinningBoard wb = new WinningBoard(fans);
             String filePath = getFilePath(WINNINGBOARD_DEFAULT_PATH);
@@ -93,11 +99,8 @@ public class Prompter {
             int awardChoice = getAwardChoice();
             wb.awardPrize(racers, awardChoice);
             wb.updateBoard();
+            wb.printWinningBoard();
 
-        } else {
-            // print out the top 3 finishers
-            topThree.forEach((duck) -> System.out.println(duck.getName() + " finished at "
-                    + duck.getDistanceTraveled() + " (Light Years)"));
         }
 
     }
@@ -124,7 +127,7 @@ public class Prompter {
     }
 
     private int getAwardChoice() {
-        System.out.print("What award do you desire?");
+        System.out.println("What award do you choose?");
         System.out.println("Cash = 1; Prize = 2");
         int awardChoice = 0;
         while (awardChoice == 0) {
@@ -153,6 +156,9 @@ public class Prompter {
         }
 
         System.out.println(banner + "\n");
+        System.out.println("Welcome to TurboDuck Race 2020!");
+        System.out.println("Please fasten your seat belt! These ducks go fast!!!");
+        System.out.println("Ducks are warming up their engines, help them by configuring a few things....\n\n");
     }
 
     private String getFilePath(String defaultPath) {
