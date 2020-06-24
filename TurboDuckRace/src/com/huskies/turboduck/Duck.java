@@ -22,13 +22,10 @@ public class Duck {
 
     // BUSINESS METHODS
     public void move() {
-        // DONE
-        double randomIncrement = Math.random();
+        double randomIncrement = (Math.random() - 0.5) * 2; // -0.5 to 0.5
         DecimalFormat df = new DecimalFormat("#.##");
-        randomIncrement = Double.valueOf(df.format(randomIncrement));
+        randomIncrement = Double.parseDouble(df.format(randomIncrement));
         this.distancePoint.changeRacerPosition(randomIncrement);
-//        System.out.println("Duck has moved " + randomIncrement + " spots, and is now at " + this.getDistanceTraveled());
-
     }
 
     // GETTERS/SETTERS
