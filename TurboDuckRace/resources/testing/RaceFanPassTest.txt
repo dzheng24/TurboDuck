@@ -1,0 +1,5 @@
+1: Levi : Yellow
+2: GeOrge : red
+3       :     Mary      : YELLOW
+4: Bob : BlaCK
+5:Claire:BLUE

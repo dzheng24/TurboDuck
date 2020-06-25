@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class WinningBoardTest{
 
         WinningBoard wb = new WinningBoard();
-        List<RaceFans> allFans = wb.getFans4TheWin();
+        List<RaceFan> allFans = wb.getFans4TheWin();
 
 
     @Test

@@ -1,10 +1,10 @@
 package com.huskies.turboduck;
 
+import com.huskies.turboduck.models.Duck;
+
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 import static java.lang.Thread.interrupted;
@@ -50,10 +50,6 @@ public class Race {
 
                 racers.values().forEach((duck) -> {
                     String racerProgress = "->".repeat((int) duck.getDistanceTraveled());
-//                    StringBuffer racerProgress = new StringBuffer();
-//                    for (double i = 0; i < duck.getDistanceTraveled(); i = i + 0.1) {
-//                        racerProgress.append("->");
-//                    }
                     System.out.println(duck.getName() + racerProgress);
                 });
                 System.out.println();
@@ -69,7 +65,7 @@ public class Race {
         }
 
         System.out.println("Race finished, stopping ducks...");
-        finishRace(threads, racers);
+        finishRace(threads);
     }
 
     /**
@@ -85,7 +81,7 @@ public class Race {
     }
 
     /**
-     * The runnable portion of the race
+     * Runnable method for each duck to start its own thread.
      * @param racer
      * @return
      */
@@ -93,31 +89,37 @@ public class Race {
         while (!interrupted()) {
             try {
                 racer.move();
-//                System.out.println("Duck \"" + racer.getName() + "\" is at position: " + racer.getDistanceTraveled()); // remove for debugging later.
                 Thread.sleep(500);
             } catch (InterruptedException e) {
-//                System.out.println("Race finished, stopping ducks...");
-//                System.out.println("Duck \"" + racer.getName() + "\" has stopped.");
                 break;
             }
         }
     }
 
     /**
-     * This finishes the race and announces the winner, recording if
+     * Interrupts each thread for each racer in the race.
      * @return
      */
-    private static void finishRace(Collection<Thread> threads, Map<Integer, Duck> racers) {
+    private static void finishRace(Collection<Thread> threads) {
         threads.forEach(Thread::interrupt);
     }
-    
-    public static int getWinningID(Map<Integer, Duck> racers){
-        Integer winningID = racers.entrySet().stream()
-                .max(Comparator.comparingDouble((entry) -> entry.getValue().getDistanceTraveled()))
-                .orElse(null)
-                .getKey();
 
-        Duck winning = racers.get(winningID);
+    /**
+     * Gets the ID of the winner based on the distance traveled. Returns -1 if map is empty or null.
+     * @param racers
+     * @return
+     */
+    public static int getWinningID(Map<Integer, Duck> racers){
+        Integer winningID;
+        try {
+            winningID = Objects.requireNonNull(racers.entrySet().stream()
+                    .max(Comparator.comparingDouble((entry) -> entry.getValue().getDistanceTraveled()))
+                    .orElse(null))
+                    .getKey();
+        } catch (NullPointerException e) {
+            winningID = -1;
+        }
+
         return winningID;
     }
 

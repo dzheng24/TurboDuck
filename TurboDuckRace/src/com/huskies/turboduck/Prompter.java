@@ -1,6 +1,6 @@
 package com.huskies.turboduck;
 
-import com.sun.security.jgss.GSSUtil;
+import com.huskies.turboduck.models.Duck;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class Prompter {
 
     private final Scanner scanner = new Scanner(System.in);    // To get input
-    private List<RaceFans> fans;
+    private List<RaceFan> fans;
     private final String RACER_DEFAULT_PATH = "C:\\Users\\levid\\Documents\\Apprentice\\Mini-Project-Java\\TurboDuckRace\\resources\\data\\racers";
     private final String WINNINGBOARD_DEFAULT_PATH = "C:\\Users\\levid\\Documents\\Apprentice\\Mini-Project-Java\\TurboDuckRace\\resources\\data\\wb.txt";
 
@@ -72,7 +72,6 @@ public class Prompter {
 
         Race.startRace(racers, raceDuration);
         return racers;
-
     }
 
 

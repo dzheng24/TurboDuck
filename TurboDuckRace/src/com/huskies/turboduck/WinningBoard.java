@@ -1,10 +1,9 @@
 package com.huskies.turboduck;
 
+import com.huskies.turboduck.models.Duck;
+
 import java.io.*;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -20,7 +19,7 @@ public class WinningBoard {
 
 
     // List of raceFans
-    public List<RaceFans> fans4TheWin;
+    public List<RaceFan> fans4TheWin;
 
     // = Arrays.asList(
 //            new RaceFans(1, "Anna"),
@@ -42,13 +41,13 @@ public class WinningBoard {
     }
 
 
-    public WinningBoard(List<RaceFans> fans4TheWin) {
+    public WinningBoard(List<RaceFan> fans4TheWin) {
         this.fans4TheWin = fans4TheWin;
     }
 
 
     //getter/setters
-    public List<RaceFans> getFans4TheWin() {
+    public List<RaceFan> getFans4TheWin() {
         return fans4TheWin;
     }
     public void setAward(Award award) { this.award = award; }
@@ -90,11 +89,11 @@ public class WinningBoard {
      * find the winner's name from duck Race result
      */
     public String findWinnerByID(int IDnumber) {
-        List<RaceFans> winner = fans4TheWin.stream()
+        List<RaceFan> winner = fans4TheWin.stream()
                 .filter(RaceFans -> RaceFans.getRaceFansNumber() == IDnumber)
                 .collect(Collectors.toList());
         if (!winner.isEmpty()) {
-            return winner.get(0).raceFansName;
+            return winner.get(0).getRaceFansName();
         } else {
             System.out.println("nobody wins");
             return null;
