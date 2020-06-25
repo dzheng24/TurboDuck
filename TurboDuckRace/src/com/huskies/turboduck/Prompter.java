@@ -1,38 +1,43 @@
 package com.huskies.turboduck;
 
-import com.sun.security.jgss.GSSUtil;
+import com.huskies.turboduck.models.Duck;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Prompter {
 
     private final Scanner scanner = new Scanner(System.in);    // To get input
-    private List<RaceFans> fans;
-    private final String RACER_DEFAULT_PATH = "C:\\Users\\levid\\Documents\\Apprentice\\Mini-Project-Java\\TurboDuckRace\\resources\\data\\racers";
-    private final String WINNINGBOARD_DEFAULT_PATH = "C:\\Users\\levid\\Documents\\Apprentice\\Mini-Project-Java\\TurboDuckRace\\resources\\data\\wb.txt";
+    private List<RaceFan> fans;
+    private String RACER_DEFAULT_PATH;
+    private String WINNINGBOARD_DEFAULT_PATH;
 
     public Prompter() {
-        // empty for static class
+        try {
+            // messy way to get the resource files. Come back later to refactor
+            RACER_DEFAULT_PATH = Paths.get(getClass().getClassLoader().getResource("data/racers.txt").toURI()).toString();
+            WINNINGBOARD_DEFAULT_PATH = Paths.get(getClass().getClassLoader().getResource("data/wb.txt").toURI()).toString();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
 
     public Map<Integer, Duck> runRace() {
-
-        // read from file or not?
-        boolean readFromFile = doThing("Do you want to read racers from a file?");
-
         // instantiate variables
         Map<Integer, Duck> racers;
 
+        // read from file or not?
+        boolean readFromFile = willDoThis("Do you want to read racers from a file?");
+
         if (readFromFile) {
-            String filePath = getFilePath(RACER_DEFAULT_PATH);
-            fans = RaceFanFactory.getRaceFans(filePath);
+            fans = RaceFanFactory.getRaceFans(getFilePath(RACER_DEFAULT_PATH));
             racers = DuckFarm.getDucks(fans);
         } else {
             System.out.println("How many racers are in this race? Enter below");
@@ -51,6 +56,7 @@ public class Prompter {
             }
             System.out.println(numOfRacers + " racers");
             racers = DuckFarm.getDucks(numOfRacers);
+            fans = RaceFanFactory.getRaceFans(racers);
 
         }
 
@@ -72,13 +78,12 @@ public class Prompter {
 
         Race.startRace(racers, raceDuration);
         return racers;
-
     }
 
 
     public void chooseAward(Map<Integer, Duck> racers) {
         List<Duck> topThree = racers.values().stream()
-                .sorted(Comparator.comparingDouble((Duck duck) -> duck.getDistanceTraveled()).reversed())
+                .sorted(Comparator.comparingDouble(Duck::getDistanceTraveled).reversed())
                 .limit(3)
                 .collect(Collectors.toList());
 
@@ -89,12 +94,10 @@ public class Prompter {
                 + duck.getDistanceTraveled() + " Light Years away."));
         System.out.println();
 
-        if (doThing("Do you want to save the results?")) { // save to a file
+        if (willDoThis("Do you want to save the results?")) { // save to a file
             WinningBoard wb = new WinningBoard(fans);
             String filePath = getFilePath(WINNINGBOARD_DEFAULT_PATH);
-            if (filePath != null) { // overwrite the file
-                wb.setPath(filePath);
-            }
+            wb.setPath(filePath);
             wb.readBoard();
             int awardChoice = getAwardChoice();
             wb.awardPrize(racers, awardChoice);
@@ -105,7 +108,7 @@ public class Prompter {
 
     }
 
-    private boolean doThing(String message) {
+    private boolean willDoThis(String message) {
         System.out.println(message);
         boolean gotInput = false;
         boolean returning = false;

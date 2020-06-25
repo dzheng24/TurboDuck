@@ -1,5 +1,7 @@
-package com.huskies.turboduck;
+package com.huskies.turboduck.models;
 
+import com.huskies.turboduck.models.*;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -8,7 +10,7 @@ public class DuckTest {
 
     @Test
     public void testSingleDuck() {
-        Duck testDuck = new Duck();
+        Duck testDuck = new YellowDuck();
 
         assertEquals("default duck", testDuck.getName());
         assertEquals(Color.YELLOW, testDuck.getColor());
@@ -16,7 +18,7 @@ public class DuckTest {
 
     @Test
     public void testSingleDuckWithCustomParams() {
-        Duck testDuck = new Duck("David", Color.BLUE);
+        Duck testDuck = new BlueDuck("David", Color.BLUE);
 
         assertEquals("David", testDuck.getName());
         assertEquals(Color.BLUE, testDuck.getColor());
@@ -25,7 +27,7 @@ public class DuckTest {
 
     @Test
     public void testingDistanceTraveled() {
-        Duck testDuck = new Duck("Jay", Color.GREEN);
+        Duck testDuck = new YellowDuck();
 
         assertEquals(0.0, testDuck.getDistanceTraveled(), .001);
         testDuck.move();
@@ -36,5 +38,9 @@ public class DuckTest {
         System.out.println();
         System.out.println(testDuck.getDistanceTraveled());
 
+        testDuck.distancePoint.setxPosition(1.34);
+        assertEquals(1.34, testDuck.getDistanceTraveled(), 0.001);
+
     }
+
 }

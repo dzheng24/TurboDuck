@@ -1,6 +1,7 @@
 package com.huskies.turboduck;
 
-import java.util.Collection;
+import com.huskies.turboduck.models.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,18 +21,18 @@ public class DuckFarm {
         // DONE
         Map<Integer, Duck> ducksForRace = new HashMap<>();
         for (int i = 1; i <= num; i++) {
-            Duck singleDuck = new Duck();
+            Duck singleDuck = new YellowDuck();
             singleDuck.setName("Duck " + i);
             ducksForRace.put(i, singleDuck);
         }
-//        System.out.println(ducksForRace);
         return ducksForRace;
     }
 
-    public static Map<Integer, Duck> getDucks(List<RaceFans> fansList) {
+    public static Map<Integer, Duck> getDucks(List<RaceFan> fansList) {
         Map<Integer, Duck> returning = new HashMap<>();
-        for (RaceFans fan : fansList) {
-            returning.put(fan.raceFansNumber, getDuck(fan.raceFansName + "'s duck", Color.YELLOW));
+        for (RaceFan fan : fansList) {
+            returning.put(fan.getRaceFansNumber(),
+                    getDuck(fan.getRaceFansName() + "'s " + fan.getPreferredColor() + " duck", fan.getPreferredColor()));
         }
         return returning;
     }
@@ -43,9 +44,7 @@ public class DuckFarm {
      * @return Duck
      */
     public static Duck getDuck() {
-        // DONE
-        Duck defaultDuck = new Duck();
-        return defaultDuck;
+        return getDuckImplementation("default duck", Color.YELLOW);
     }
 
     /**
@@ -55,9 +54,20 @@ public class DuckFarm {
      * @return Duck
      */
     public static Duck getDuck(String name, Color color) {
-        Duck customDuck = new Duck();
-        customDuck.setName(name);
-        customDuck.setColor(color);
-        return customDuck;
+        return getDuckImplementation(name, color);
+    }
+
+    private static Duck getDuckImplementation(String name, Color color) {
+        Duck returning;
+        switch (color) {
+            case BLACK -> returning = new BlackDuck(name, color);
+            case YELLOW -> returning = new YellowDuck(name, color);
+            case RED -> returning = new RedDuck(name, color);
+            case GREY -> returning = new GreyDuck(name, color);
+            case GREEN -> returning = new GreenDuck(name, color);
+            case WHITE -> returning = new WhiteDuck(name, color);
+            default -> returning = new YellowDuck();
+        }
+        return returning;
     }
 }

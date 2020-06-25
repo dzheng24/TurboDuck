@@ -1,5 +1,8 @@
 package com.huskies.turboduck;
 
+import com.huskies.turboduck.models.Color;
+import com.huskies.turboduck.models.Duck;
+import com.huskies.turboduck.models.YellowDuck;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -20,7 +23,7 @@ public class RaceTest {
         singleDuck.put(0, DuckFarm.getDuck());
 
         for (int i = 0; i < 5; i++) {
-            allDucks.put(i, new Duck("Duck " + i, Color.YELLOW));
+            allDucks.put(i, new YellowDuck("Duck " + i, Color.YELLOW));
         }
     }
 
@@ -29,12 +32,6 @@ public class RaceTest {
     public void testCheckDuration() {
        Race.startRace(singleDuck, 1);
        Race.startRace(singleDuck, 3.2);
-
-    }
-
-    @Ignore("Waiting for Logging class.")
-    @Test
-    public void testMakeRace_withLogging() {
 
     }
 
@@ -51,14 +48,14 @@ public class RaceTest {
 
     }
 
-    @Test
-    public void testEmptyRace() {
-        try {
-            Race.startRace(null, 0.1);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-            // it worked.
-        }
+    @Test(expected = IllegalArgumentException.class)
+    public void testNullRace() {
+        Race.startRace(null, 0.1);
+    }
+
+    @Test(timeout = 7000)
+    public void testEmptyRace_stillRuns() {
+        Race.startRace(new HashMap<>(), 0.1);
     }
 
     @Test
@@ -78,4 +75,23 @@ public class RaceTest {
         assertEquals(54, Race.getSeconds(11.9));
     }
 
+    @Test
+    public void testGetWinningID() {
+        // move() is random, keep iterating until the duck isn't at the start point
+        while (allDucks.get(0).getDistanceTraveled() != 0) {
+            moveDuck();
+        }
+        assertEquals(0, Race.getWinningID(allDucks));
+    }
+
+    private void moveDuck() {
+        for (int i = 0; i < 10; i++) {
+            allDucks.get(0).move();
+        }
+    }
+
+    @Test
+    public void testGetWinningID_returnsNegative1_withEmptyMap() {
+        assertEquals(-1,Race.getWinningID(new HashMap<>()));
+    }
 }
