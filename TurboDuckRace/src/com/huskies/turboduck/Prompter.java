@@ -47,7 +47,7 @@ public class Prompter {
         boolean readFromFile = willDoThis("Do you want to read racers from a file?");
 
         if (readFromFile) {
-            fans = RaceFanFactory.getRaceFans(getFilePath(RACER_DEFAULT_PATH));
+            fans = RaceFanFactory.getRaceFans((RACER_DEFAULT_PATH));
             racers = DuckFarm.getDucks(fans);
         } else {
             System.out.println("How many racers are in this race? Enter below");
@@ -113,7 +113,7 @@ public class Prompter {
 
         if (willDoThis("Do you want to save the results?")) { // save to a file
             WinningBoard wb = new WinningBoard(fans);
-            String filePath = getFilePath(WINNINGBOARD_DEFAULT_PATH);
+            String filePath = (WINNINGBOARD_DEFAULT_PATH);
             wb.setPath(filePath);
             wb.readBoard();
             int awardChoice = getAwardChoice();
