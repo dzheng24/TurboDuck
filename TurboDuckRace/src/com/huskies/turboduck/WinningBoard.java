@@ -13,28 +13,11 @@ public class WinningBoard {
 
     public Award award;
     enum Award {PRIZE, CASH};
-    String path = "C:\\Users\\levid\\Documents\\Apprentice\\Mini-Project-Java\\TurboDuckRace\\resources\\winningBoard\\wb.txt";
-//    String path = ClassLoader.getSystemResource("winningBoard/wb.txt").getPath();
+    String path;
     Map<String, Map<Award, Integer>> winnersOnBoard = new TreeMap<>();
 
-
     // List of raceFans
-    public List<RaceFan> fans4TheWin;
-
-    // = Arrays.asList(
-//            new RaceFans(1, "Anna"),
-//            new RaceFans(2, "Bob"),
-//            new RaceFans(3,"Chris"),
-//            new RaceFans(4,"David"),
-//            new RaceFans(5,"Emma"),
-//            new RaceFans(6,"Fox"),
-//            new RaceFans(7,"Gorge"),
-//            new RaceFans(8,"Henry"),
-//            new RaceFans(9,"Ike"),
-//            new RaceFans(10,"Jesse"),
-//            new RaceFans(11,"Kris"),
-//            new RaceFans(12,"Levi")
-//    );
+    private List<RaceFan> fans4TheWin;
 
     public WinningBoard() {
 

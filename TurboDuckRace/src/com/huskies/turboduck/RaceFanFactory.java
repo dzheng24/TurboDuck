@@ -1,10 +1,12 @@
 package com.huskies.turboduck;
 
 import com.huskies.turboduck.models.Color;
+import com.huskies.turboduck.models.Duck;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class RaceFanFactory {
 
@@ -44,6 +46,15 @@ public class RaceFanFactory {
             e.printStackTrace();
         }
 
+        return returning;
+    }
+
+    public static List<RaceFan> getRaceFans(Map<Integer, Duck> racers) {
+        List<RaceFan> returning = new ArrayList<>();
+        for (Integer id : racers.keySet()) {
+            Duck duck = racers.get(id);
+            returning.add(new RaceFan(id, duck.getName(), duck.getColor()));
+        }
         return returning;
     }
 }

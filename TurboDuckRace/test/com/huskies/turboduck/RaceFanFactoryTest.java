@@ -1,10 +1,13 @@
 package com.huskies.turboduck;
 
 import com.huskies.turboduck.models.Color;
+import com.huskies.turboduck.models.Duck;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -55,5 +58,19 @@ public class RaceFanFactoryTest {
             "(in that order), separated by a \":\"";
             assertEquals(message, e.getMessage());
         }
+    }
+
+    @Test
+    public void testGetRaceFans_PassInDucks_CorrectList() {
+        Map<Integer, Duck> ducks = DuckFarm.getDucks(5);
+        List<RaceFan> fans = RaceFanFactory.getRaceFans(ducks);
+        assertEquals(5, fans.size());
+        assertEquals(Color.YELLOW, fans.get(0).getPreferredColor());
+    }
+
+    @Test
+    public void testGetRaceFans_PassInEmptyDucks_EmptyList() {
+        List<RaceFan> fans = RaceFanFactory.getRaceFans(new HashMap<>());
+        assertTrue(fans.isEmpty());
     }
 }

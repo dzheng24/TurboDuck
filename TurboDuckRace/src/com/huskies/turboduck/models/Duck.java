@@ -51,7 +51,7 @@ public abstract class Duck {
 
         private double xPosition = 0.0;   // Location along x dimension of this point
         private final double MIN_POSITION = 0;
-        private final double MAX_POSITION = 50;
+        private final double MAX_POSITION = 100;
 
         public Point() {
             xPosition = MIN_POSITION;

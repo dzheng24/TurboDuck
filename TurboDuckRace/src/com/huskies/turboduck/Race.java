@@ -16,7 +16,10 @@ public class Race {
     }
 
     /**
-     * Runs race. e.g. each racer in racers gets their own thread.
+     * Initializes the race and sets each duck off on its own thread to move itself. Will end the race once the time
+     * duration is
+     * @param racers
+     * @param duration
      */
     public static void startRace(Map<Integer, Duck> racers, double duration) {
         if (racers == null || duration < 0) {
