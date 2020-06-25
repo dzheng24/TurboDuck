@@ -10,7 +10,7 @@ public enum Color {
 
     private double stepModifer;
 
-    private Color(double stepModifer) {
+    Color(double stepModifer) {
         this.stepModifer = stepModifer;
     }
 

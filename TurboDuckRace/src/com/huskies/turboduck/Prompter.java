@@ -24,7 +24,6 @@ public class Prompter {
 
     public Prompter() {
         try {
-            // messy way to get the resource files. Come back later to refactor
             RACER_DEFAULT_PATH = Paths.get(getClass().getClassLoader().getResource("data/racers.txt").toURI()).toString();
             WINNINGBOARD_DEFAULT_PATH = Paths.get(getClass().getClassLoader().getResource("data/wb.txt").toURI()).toString();
         } catch (URISyntaxException e) {
@@ -37,7 +36,7 @@ public class Prompter {
      * whether to read racers from a file
      * set the number of racers
      * set the duration of race in minutes
-     * @return
+     * @return Map<Integer, Duck>
      */
 
     public Map<Integer, Duck> runRace() {
@@ -129,7 +128,7 @@ public class Prompter {
     /**
      *to return boolean value of client's option to prompter
      * @param message
-     * @return
+     * @return boolean willDoThis
      */
 
     private boolean willDoThis(String message) {
@@ -155,7 +154,7 @@ public class Prompter {
 
     /**
      * prompt to client to choose award
-     * @return
+     * @return int getAwardChoice
      */
 
     private int getAwardChoice() {
@@ -199,7 +198,7 @@ public class Prompter {
     /**
      * set the path to load wb.txt and racers.txt
      * @param defaultPath
-     * @return
+     * @return String getFilePath
      */
 
     private String getFilePath(String defaultPath) {

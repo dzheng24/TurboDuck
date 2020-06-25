@@ -22,31 +22,28 @@ public abstract class Duck {
         this.distancePoint = new Point();
     }
 
-    // BUSINESS METHODS
+    // BUSINESS METHODS. this method is to change ducks' position
     public abstract void move();
 
     // GETTERS/SETTERS
     public void setName(String name) {
         this.name = name;
     }
-
     public void setColor(Color color) {
         this.color = color;
     }
-
     public String getName() {
         return name;
     }
-
     public Color getColor() {
         return color;
     }
-
     public double getDistanceTraveled() {
         return distancePoint.getxPosition();
     }
 
 
+    // inner class
     class Point {
 
         private double xPosition = 0.0;   // Location along x dimension of this point

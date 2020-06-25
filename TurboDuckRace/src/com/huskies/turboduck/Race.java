@@ -74,7 +74,7 @@ public class Race {
     /**
      * Finds the seconds of a a double representing time in minutes. Rounds to whole seconds.
      * @param val minutes
-     * @return
+     * @return int getSeconds
      */
     static int getSeconds(double val) {
         BigDecimal temp = new BigDecimal(String.valueOf(val));
@@ -86,7 +86,6 @@ public class Race {
     /**
      * Runnable method for each duck to start its own thread.
      * @param racer
-     * @return
      */
     private static void runDuckThread(Duck racer) {
         while (!interrupted()) {
@@ -101,7 +100,6 @@ public class Race {
 
     /**
      * Interrupts each thread for each racer in the race.
-     * @return
      */
     private static void finishRace(Collection<Thread> threads) {
         threads.forEach(Thread::interrupt);
@@ -110,7 +108,7 @@ public class Race {
     /**
      * Gets the ID of the winner based on the distance traveled. Returns -1 if map is empty or null.
      * @param racers
-     * @return
+     * @return int getWinningID
      */
     public static int getWinningID(Map<Integer, Duck> racers){
         Integer winningID;

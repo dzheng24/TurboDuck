@@ -19,17 +19,13 @@ public class WinningBoard {
 
     // List of raceFans
     private List<RaceFan> fans4TheWin;
-
     public WinningBoard() {
         winnersOnBoard = new TreeMap<>();
     }
-
-
     public WinningBoard(List<RaceFan> fans4TheWin) {
         this();
         this.fans4TheWin = fans4TheWin;
     }
-
 
     //getter/setters
     public List<RaceFan> getFans4TheWin() {
@@ -148,6 +144,10 @@ public class WinningBoard {
             e.printStackTrace();
         }
     }
+
+    /**
+     * print the Winning Result from file wb.txt
+     */
 
     public void printWinningBoard() {
         String board = null;

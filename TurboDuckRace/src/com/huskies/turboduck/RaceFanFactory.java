@@ -14,6 +14,12 @@ public class RaceFanFactory {
         // private for static class
     }
 
+    /**
+     * read file to get raceFans preferred Duck(ID&Color) to race
+     * @param path
+     * @return List<RaceFan>
+     */
+
     public static List<RaceFan> getRaceFans(String path) {
         List<RaceFan> returning = new ArrayList<>();
         File filename = new File(path);
@@ -49,6 +55,12 @@ public class RaceFanFactory {
         return returning;
     }
 
+
+    /**
+     * generating RaceFans from Map<Integer, Duck> racers.
+     * @param racers
+     * @return List<RaceFan>
+     */
     public static List<RaceFan> getRaceFans(Map<Integer, Duck> racers) {
         List<RaceFan> returning = new ArrayList<>();
         for (Integer id : racers.keySet()) {
