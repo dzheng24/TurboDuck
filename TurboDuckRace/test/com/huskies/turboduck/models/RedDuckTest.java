@@ -38,7 +38,7 @@ public class RedDuckTest {
         for (int i = 0; i < 4; i++) {
             duck.move();
             if (last < duck.getDistanceTraveled()) {
-                fail("Should have kept moving backward");
+                fail("Should have kept moving backward"); // todo this fails spuriously, diagnose later
             }
         }
     }
