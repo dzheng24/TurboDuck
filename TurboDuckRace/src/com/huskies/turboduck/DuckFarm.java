@@ -63,9 +63,7 @@ public class DuckFarm {
             case BLACK -> returning = new BlackDuck(name, color);
             case YELLOW -> returning = new YellowDuck(name, color);
             case RED -> returning = new RedDuck(name, color);
-            case BLUE -> returning = new BlueDuck(name, color);
             case GREY -> returning = new GreyDuck(name, color);
-            case BROWN -> returning = new BrownDuck(name, color);
             case GREEN -> returning = new GreenDuck(name, color);
             case WHITE -> returning = new WhiteDuck(name, color);
             default -> returning = new YellowDuck();

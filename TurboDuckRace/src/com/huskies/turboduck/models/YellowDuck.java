@@ -18,7 +18,7 @@ public class YellowDuck extends Duck {
 
     @Override
     public void move() {
-        double randomIncrement = (Math.random() - 0.5) * 2;
+        double randomIncrement = (Math.random() - 0.5) * getColor().getStepModifer();
         randomIncrement = Double.parseDouble(df.format(randomIncrement));
         distancePoint.changeRacerPosition(randomIncrement);
     }

@@ -16,7 +16,7 @@ public class BlackDuckTest {
     @Test(timeout = 10000)
     public void testMove() {
         // should eventually move
-        while (duck.getDistanceTraveled() != 0) {
+        while (duck.getDistanceTraveled() == 0) {
             duck.move();
         }
         assertTrue(true);
