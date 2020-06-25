@@ -175,6 +175,9 @@ public class Prompter {
             if (filePath.isEmpty() || "YES".equals(filePath.toUpperCase().strip())
                     || "Y".equals(filePath.toUpperCase().strip())) {
                 filePath = defaultPath;
+            } else if ("NO".equals(filePath.toUpperCase().strip()) || "N".equals(filePath.toUpperCase().strip())) {
+                System.out.println("New File Path: ");
+                filePath = scanner.nextLine();
             }
 
             if (Files.exists(Path.of(filePath))) { // make sure file exists
