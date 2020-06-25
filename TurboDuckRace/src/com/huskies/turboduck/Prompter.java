@@ -81,6 +81,7 @@ public class Prompter {
     }
 
 
+
     public void chooseAward(Map<Integer, Duck> racers) {
         List<Duck> topThree = racers.values().stream()
                 .sorted(Comparator.comparingDouble(Duck::getDistanceTraveled).reversed())

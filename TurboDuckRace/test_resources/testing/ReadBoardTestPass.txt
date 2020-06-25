@@ -1,0 +1,3 @@
+Anna, PRIZE=1, CASH=2
+Bob,       Prize=1, CaSh=3
+George       ,             Cash=2
