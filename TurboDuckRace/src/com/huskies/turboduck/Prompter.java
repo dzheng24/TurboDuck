@@ -18,6 +18,10 @@ public class Prompter {
     private String RACER_DEFAULT_PATH;
     private String WINNINGBOARD_DEFAULT_PATH;
 
+    /**
+     * Constructor for Prompter. Ensure the path for resource file is correct.
+     */
+
     public Prompter() {
         try {
             // messy way to get the resource files. Come back later to refactor
@@ -28,6 +32,13 @@ public class Prompter {
         }
     }
 
+    /**
+     * let the client set the index for the race
+     * whether to read racers from a file
+     * set the number of racers
+     * set the duration of race in minutes
+     * @return
+     */
 
     public Map<Integer, Duck> runRace() {
         // instantiate variables
@@ -80,6 +91,12 @@ public class Prompter {
         return racers;
     }
 
+    /**
+     *print out the top three winners' name and grant prize the the number 1 winner
+     * set the choice of award
+     * update the wb.txt with new winners award
+     * @param racers
+     */
 
     public void chooseAward(Map<Integer, Duck> racers) {
         List<Duck> topThree = racers.values().stream()
@@ -108,6 +125,12 @@ public class Prompter {
 
     }
 
+    /**
+     *to return boolean value of client's option to prompter
+     * @param message
+     * @return
+     */
+
     private boolean willDoThis(String message) {
         System.out.println(message);
         boolean gotInput = false;
@@ -129,6 +152,11 @@ public class Prompter {
         return returning;
     }
 
+    /**
+     * prompt to client to choose award
+     * @return
+     */
+
     private int getAwardChoice() {
         System.out.println("What award do you choose?");
         System.out.println("Cash = 1; Prize = 2");
@@ -148,6 +176,9 @@ public class Prompter {
         return awardChoice;
     }
 
+    /**
+     *print out banner and welcome message
+     */
     public void printBanner() {
         URL asciiFile = (ClassLoader.getSystemResource(Path.of("ascii_art","banner.txt").toString()));
         String banner = null;
@@ -163,6 +194,12 @@ public class Prompter {
         System.out.println("Please fasten your seat belt! These ducks go fast!!!");
         System.out.println("Ducks are warming up their engines, help them by configuring a few things....\n\n");
     }
+
+    /**
+     * set the path to load wb.txt and racers.txt
+     * @param defaultPath
+     * @return
+     */
 
     private String getFilePath(String defaultPath) {
         String returning = "";

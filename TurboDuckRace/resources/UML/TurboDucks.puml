@@ -1,0 +1,84 @@
+@startuml
+
+class Prompter{
++runRace()
++chooseAward(Map<Integer, Duck> racers)
+-boolean doThing(String message)
+-int getAwardChoice()
++printBanner()
+-String getFilePath(String defaultPath)
+}
+
+Duck --> DuckFarm
+
+Enum Color{
+    YELLOW,
+    ORANGE,
+    PURPLE,
+    RED,
+    BLACK,
+    BROWN,
+    GREEN,
+    BLUE,
+    MAGENTA,
+    CYAN,
+    INDIGO,
+    WHITE,
+    GREY,
+    PINK,
+    VIOLET
+}
+
+class Duck{
+-private String name;
+-private Point distancePoint;
+...Enum...
+-private Color color;
+___
+~move()
+}
+
+class DuckFarm{
++getDuck()
++getDucks()
+}
+note left : this is \na Factory Class
+
+class Point{
+-private double xPosition = 0.0;
+-private final double MIN_POSITION = 0;
+-private final double MAX_POSITION = 50;
++changeRacerPosition(double increment)
+}
+
+
+
+Class Race{
++public static void startRace(Map<Integer,Duck> racers, double duration)
++private static void runDuckThread(Duck racer)
++private static void finishRace(Collection<Thread> threads, Map<Integer, Duck> racers)
++public static int getWinningID(Map<Integer, Duck> racers)
++static int getSeconds(double val)
+}
+
+Class RaceFans{
++private String raceFansName;
++private int raceFansNumber;
+}
+
+Class RaceFanFactory{
++getRaceFans()
+}
+
+Class WinningBoard{
+-public Award award;
+-enum Award {PRIZE, CASH}
+-String Path
+
++readBoard()
++findWinnerByID(int IDnumber)
++awardPrize(Map<Integer, Duck> racers, int prizeNum)
++updateBoard()
+}
+
+@enduml
