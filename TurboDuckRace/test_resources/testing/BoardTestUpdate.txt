@@ -1,0 +1,2 @@
+Anna, PRIZE=2
+Bob,Cash=1

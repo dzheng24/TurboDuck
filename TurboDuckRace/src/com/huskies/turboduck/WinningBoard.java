@@ -3,6 +3,7 @@ package com.huskies.turboduck;
 import com.huskies.turboduck.models.Duck;
 
 import java.io.*;
+import java.net.IDN;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -14,17 +15,18 @@ public class WinningBoard {
     public Award award;
     enum Award {PRIZE, CASH};
     String path;
-    Map<String, Map<Award, Integer>> winnersOnBoard = new TreeMap<>();
+    Map<String, Map<Award, Integer>> winnersOnBoard;
 
     // List of raceFans
     private List<RaceFan> fans4TheWin;
 
     public WinningBoard() {
-
+        winnersOnBoard = new TreeMap<>();
     }
 
 
     public WinningBoard(List<RaceFan> fans4TheWin) {
+        this();
         this.fans4TheWin = fans4TheWin;
     }
 
@@ -33,6 +35,9 @@ public class WinningBoard {
     public List<RaceFan> getFans4TheWin() {
         return fans4TheWin;
     }
+    public void setFans4TheWin(List<RaceFan> fans){
+        fans4TheWin = fans;
+    }
     public void setAward(Award award) { this.award = award; }
     public Award getAward() {
         return award;
@@ -40,6 +45,10 @@ public class WinningBoard {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public Map<String, Map<Award, Integer>> getWinnersOnBoard() {
+        return winnersOnBoard;
     }
 
     /**
@@ -61,7 +70,7 @@ public class WinningBoard {
                     List<String> listPrize = Arrays.asList(listLine.get(i).split("="));
                     prizeAwards.put(Award.valueOf(listPrize.get(0).toUpperCase().strip()), parseInt(listPrize.get(1))); //store in the Map
                 }
-                winnersOnBoard.put(listLine.get(0), prizeAwards);
+                winnersOnBoard.put(listLine.get(0).strip(), prizeAwards);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -71,16 +80,17 @@ public class WinningBoard {
     /**
      * find the winner's name from duck Race result
      */
-    public String findWinnerByID(int IDnumber) {
-        List<RaceFan> winner = fans4TheWin.stream()
+    public String findByID(int IDnumber) {
+        List<RaceFan> fan = fans4TheWin.stream()
                 .filter(RaceFans -> RaceFans.getRaceFansNumber() == IDnumber)
                 .collect(Collectors.toList());
-        if (!winner.isEmpty()) {
-            return winner.get(0).getRaceFansName();
+        String returning = "";
+        if (!fan.isEmpty()) {
+            returning = fan.get(0).getRaceFansName();
         } else {
-            System.out.println("nobody wins");
-            return null;
+            throw new IllegalArgumentException("No one by that ID number");
         }
+        return returning;
     }
 
     /**
@@ -90,7 +100,7 @@ public class WinningBoard {
     public void awardPrize(Map<Integer, Duck> racers, int prizeNum) {
         //client to choose prize
         int winningID = Race.getWinningID(racers);
-        String winnerName = findWinnerByID(winningID);  //winningID
+        String winnerName = findByID(winningID);  //winningID
         if (prizeNum == 1) {
             setAward(Award.CASH);
         } else {
@@ -105,15 +115,6 @@ public class WinningBoard {
             prizeCount = winnersOnBoard.get(winnerName);
             int newAmount = (prizeCount.get(award) != null) ? (prizeCount.get(award) + 1) : 1;
             prizeCount.put(award, newAmount);
-//            for (Award awardInMap : awardsSet) {
-//                if (awardInMap.equals(award)) {
-//                    prizeCount.put(awardInMap, (prizeCount.get(awardInMap) + 1));
-//                    winnersOnBoard.put(winnerName, prizeCount);
-//                } else {
-//                    prizeCount.put(award, 1);
-//                    winnersOnBoard.put(winnerName, prizeCount);
-//                }
-//            }
         } else {
             prizeCount = new HashMap<>();
             prizeCount.put(award, 1);
@@ -150,7 +151,6 @@ public class WinningBoard {
 
     public void printWinningBoard() {
         String board = null;
-
         try {
             board = Files.lines(Paths.get(path)).collect(Collectors.joining("\n"));
         } catch (IOException e) {
