@@ -18,10 +18,10 @@ public class DuckTest {
 
     @Test
     public void testSingleDuckWithCustomParams() {
-        Duck testDuck = new BlueDuck("David", Color.BLUE);
+        Duck testDuck = new GreenDuck("David", Color.GREEN);
 
         assertEquals("David", testDuck.getName());
-        assertEquals(Color.BLUE, testDuck.getColor());
+        assertEquals(Color.GREEN, testDuck.getColor());
         assertEquals(0.0, testDuck.getDistanceTraveled(), .001);
     }
 

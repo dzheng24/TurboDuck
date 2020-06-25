@@ -78,10 +78,10 @@ public class DuckFarmTest {
     public void testGetDuck_makesCorrectClass() {
         Duck duck1 = DuckFarm.getDuck("temp", Color.RED);
         Duck duck2 = DuckFarm.getDuck("temp", Color.BLACK);
-        Duck duck3 = DuckFarm.getDuck("", Color.BLUE);
+        Duck duck3 = DuckFarm.getDuck("", Color.GREEN);
 
         assertEquals(RedDuck.class, duck1.getClass());
         assertEquals(BlackDuck.class, duck2.getClass());
-        assertEquals(BlueDuck.class, duck3.getClass());
+        assertEquals(GreenDuck.class, duck3.getClass());
     }
 }
